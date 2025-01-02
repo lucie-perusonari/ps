@@ -40,6 +40,7 @@ using namespace std;
 /*
     join함수를 사용할 수 있을 것이라고 생각해서 vector를 사용했지만, 실제로는 효력이 없었음.
 */
+
 int main(){
     while(true){
         int n;
