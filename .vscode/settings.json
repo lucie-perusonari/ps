@@ -1,11 +1,7 @@
 {
     "files.associations": {
-        "algorithm": "cpp",
-        "string": "cpp",
-        "vector": "cpp",
-        "new": "cpp",
-        "ostream": "cpp",
-        "iostream": "cpp",
-        "cmath": "cpp"
+        "*.ndjson": "jsonl",
+        "*.dbclient-js": "javascript",
+        "iostream": "cpp"
     }
 }
