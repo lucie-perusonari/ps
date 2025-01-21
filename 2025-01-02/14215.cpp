@@ -38,4 +38,19 @@ int main() {
     vector<int> edge = { a, b, c };
 
     sort(edge.begin(), edge.end());
+
+    int largest_edge = edge.at(2);
+
+    int other_edges_sum = edge.at(0) + edge.at(1);
+
+
+    //* 가장 긴 변이 두 변의 합보다 크다면, 두 변의 합에서 -1을 해서 변의 길이를 맞춰줌.
+    if (largest_edge >= other_edges_sum) {
+        largest_edge = other_edges_sum - 1;
+        cout << largest_edge + other_edges_sum;
+    } else {
+        cout << largest_edge + other_edges_sum;
+    }
+
+
 }

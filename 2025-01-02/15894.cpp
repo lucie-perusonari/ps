@@ -20,7 +20,6 @@ using namespace std;
     *출력 : 첫 번째 줄에 형석이가 말해야 하는 답을 출력한다.
 
 */
-
 int main() {
     long n = 0;
 
