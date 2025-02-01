@@ -1,9 +1,14 @@
 {
-    "files.associations": {
-        "*.sqlbook": "sql",
-        "*.ndjson": "jsonl",
-        "*.dbclient-js": "javascript",
-        "iostream": "cpp",
-        "random": "cpp"
-    }
+	"files.associations": {
+		"*.sqlbook": "sql",
+		"*.ndjson": "jsonl",
+		"*.dbclient-js": "javascript",
+		"iostream": "cpp",
+		"random": "cpp",
+		"initializer_list": "cpp",
+		"map": "cpp",
+		"hash_map": "cpp",
+		"algorithm": "cpp",
+		"sstream": "cpp"
+	}
 }
