@@ -32,55 +32,82 @@ using namespace std;
 
 //* 10^6이라는 말은 100만이라는 뜻. 1500만번 시행 이내에 답 내야함.
 //* 재귀를 사용하는 게 좋을 듯. 
-//* 세 가지 경우의 수가 있으니까, 각 재귀 함수들이 연산을 실행하고, 숫자와 연산 종류를 캐싱.
-//* 마지막으로 각 분기 중에서 가장 적은 값을 return;
-//* 되도록이면 각 함수들이 자신이 갖고 있는 가장 작은 분기의 실행 횟수를 return 해줬으면 좋겠다.
+//* 생각해보니 3^n*2^m + a 를 구하는 문제네? 
+//* 근데 여기에서 n+m+a가 최소가 되는 수를 구하면 됨. 
 
-unordered_map<int, int> cache;
-int min_depth = 1000001;
 
-//* 좀 더 깔끔하게 비교할 순 없나?
-int check(int depth1, int depth2, int n) {
-	int min_value = min(depth1, depth2);
-	if (cache.count(n) == 0 && cache[n] > n) {
-		cache.insert({ n, min_value });
+/**
+ * 1. 각 분기마다 연산이 실행된다. n이 아니라면 depth를 추가하고, 다른 연산들을 검토한다.
+ * 2. 트리의 최하위에서는 1이 등장한다. 이 지점에서 depth를 반환한다.
+ * 3. check는 트리 최하위에서 반환된 결과들을 모아서 캐싱한다. n일 때, 최소 depth가 얼마인지 기록한다.
+ *
+ */
+
+ // depth와 n을 캐싱하자.
+unordered_map<int, unordered_map<int, bool>> cache;
+
+int min_depth = 0;
+
+int mod3(int n) {
+	if (n % 3 == 0) {
+		return n / 3;
+	} else {
+		return n - 1;
 	}
-	return min_value;
 }
 
-int compute(int n, int operation = -1, int depth = 0) {
+int mod2(int n) {
+	if (n % 2 == 0) {
+		return n / 2;
+	} else {
+		return n - 1;
+	}
+}
+
+//* 이것이 최악의 경우를 담아줌. 
+void set_max_depth(int n) {
+	while (n != 1) {
+		n = mod2(n);
+		min_depth++;
+	}
+}
+
+//* 다른 재귀 트리의 값을 확인한 뒤에 재귀를 실행할지 말지를 정해야 함.
+void compute(int n, int operation = -1, int depth = 0) {
 	if (operation == -1) {
-		if (n == 1) return 0;
-
-		return check(compute(n, 0, depth),
-			compute(n, 1, depth), n);
+		compute(n, 0, depth);
+		compute(n, 1, depth);
 	}
 
-	//* 일정 깊이 이상 탐색할 수 없으니 depth는 최소값만 들어올 수 있음.
-	if (depth == min_depth) {
-		return 1000001;
+	depth++; //* 본인의 depth를 먼저 추가해줌. opration이 -1이 아니라면 시작하자마자 depth를 상승시키고 시작할 것.
+
+	//* 최소 깊이 이상 탐색할 필요는 없음.
+	if (depth > min_depth) {
+		return;
 	}
 
-	if (operation == 0 && n % 3 == 0) {
-		n = n / 3;
-	} else if (operation == 1 && n % 2 == 0) {
-		n = n / 2;
-	} else { //* 2, 3임에도 불구하고 실패한 경우.
-		n -= 1;
+	if (operation == 0) {
+		n = mod3(n);
+	} else {
+		n = mod2(n);
 	}
 
-	depth++; //* n값이 바뀌었으니 반영.
+	//* 계산하기 전의 n값에 대해서 캐싱됨. 어쨌든 동일한 depth에서 한 번만 실행되게 만들어주자.
+	if (cache[n][depth] == true) {
+		return;
+	} else {
+		cache[n][depth] = true;
+	}
 
-	//* 여기서 성공했을 경우 최소값이라는 뜻. 캐싱해줌.
+	//* depth를 반환하기 전에 최소 값을 기록해줌.
 	if (n == 1) {
-		if (min_depth > depth) {
-			min_depth = depth;
-		}
-		return depth;
+		min_depth = depth;
+		return;
 	}
 
-	return check(compute(n, 0, depth),
-		compute(n, 1, depth), n);
+	//* n일 때, 재귀를 실행할지 말지를 정해야 함. 위의 캐싱을 통해서 구현. 
+	compute(n, 0, depth);
+	compute(n, 1, depth);
 }
 
 int main() {
@@ -90,6 +117,8 @@ int main() {
 	int n;
 	cin >> n;
 
-	int depth = compute(n);
-	cout << depth;
+	set_max_depth(n);
+	compute(n);
+
+	cout << min_depth;
 }
