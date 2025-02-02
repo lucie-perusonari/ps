@@ -9,6 +9,8 @@
 		"map": "cpp",
 		"hash_map": "cpp",
 		"algorithm": "cpp",
-		"sstream": "cpp"
+		"sstream": "cpp",
+		"string": "cpp",
+		"typeinfo": "cpp"
 	}
 }
