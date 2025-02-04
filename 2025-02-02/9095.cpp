@@ -37,7 +37,7 @@ using namespace std;
 
 unordered_map<int, unordered_map<int, int>> cache;
 
-int compute(int n, int k = 0) {
+int drink(int n, int k = 0) {
 	if (cache.count(n) && cache[n].count(k)) {
 		return cache[n][k];
 	}
@@ -49,7 +49,7 @@ int compute(int n, int k = 0) {
 	} else if (n < 0) {
 		return 0;
 	} else {
-		int result = compute(n, 1) + compute(n, 2) + compute(n, 3);
+		int result = drink(n, 1) + drink(n, 2) + drink(n, 3);
 
 		cache[n + k][k] = result;
 		return result;
@@ -66,7 +66,7 @@ int main() {
 		int n;
 		cin >> n;
 
-		cout << compute(n) << endl;
+		cout << drink(n) << endl;
 	}
 
 

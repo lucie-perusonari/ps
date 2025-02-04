@@ -27,7 +27,7 @@ using namespace std;
 
 unordered_map<int, unordered_map<int, int>> cache;
 
-int compute(int n, int k = 0) {
+int drink(int n, int k = 0) {
 	if (cache.count(n) * cache[n].count(k)) {
 		return cache[n][k];
 	}
@@ -53,7 +53,7 @@ int compute(int n, int k = 0) {
 		return 1;
 	}
 
-	int result = compute(n, 1) + compute(n, 2);
+	int result = drink(n, 1) + drink(n, 2);
 
 	//* 일일이 다 더한 다음에 나눗셈을 하면 오버플로우가 일어남.
 	if (result > 10007) {
@@ -80,6 +80,6 @@ int main() {
 		그렇다면 이진 트리를 이용하자.
 	*/
 
-	cout << compute(n);
+	cout << drink(n);
 
 }
