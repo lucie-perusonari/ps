@@ -49,7 +49,7 @@ using namespace std;
 
 
 vector<int> sequence;
-unordered_map<int, int> cache;
+unordered_map<int, unordered_map<bool, int>> cache; //* 매개 변수에 따라서 함수의 메모이제이션이 다르게 이루어질 수 있음.
 
 //* 메모이제이션을 어케하지?
 int compute(int i = 0, bool is_stepped = false) {
@@ -57,21 +57,20 @@ int compute(int i = 0, bool is_stepped = false) {
 		return 0;
 	}
 
+	if (cache.count(i) && cache[i].count(is_stepped)) {
+		return cache[i][is_stepped];
+	}
+
 	int current = sequence[i];
 
 	// 2칸 뛰기.
 	if (is_stepped) {
-		// cache[i] = current + compute(i + 2);
-		return current + compute(i + 2);
+		cache[i][true] = current + compute(i + 2);
+		return cache[i][true];
 	}
 
-	//* 만일 3번째인 경우 이 캐시 값은 사용할 수 없음.
-	if (cache.count(i)) {
-		return cache[i];
-	}
-
-	cache[i] = max(current + compute(i + 1, true), current + compute(i + 2));
-	return cache[i];
+	cache[i][false] = max(current + compute(i + 1, true), current + compute(i + 2));
+	return cache[i][false];
 }
 
 int main() {
