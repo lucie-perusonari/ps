@@ -32,7 +32,7 @@ unordered_map<int, int> cache;
 
 //* i값에서 시작해서 순서를 밟아나감.
 //* 이 문제는 두고두고 복습해야할 것 같음.
-int compute(int n) {
+int increase(int n) {
 	if (cache.count(n)) {
 		return cache[n];
 	}
@@ -43,7 +43,7 @@ int compute(int n) {
 			continue;
 		}
 
-		max_length = max(max_length, 1 + compute(i));
+		max_length = max(max_length, 1 + increase(i));
 	}
 
 	cache[n] = max_length;
@@ -65,7 +65,7 @@ int main() {
 
 	int max_length = 0;
 	for (int i = 0; i < numbers.size(); i++) {
-		max_length = max(max_length, compute(i));
+		max_length = max(max_length, increase(i));
 	}
 
 	cout << max_length;
