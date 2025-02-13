@@ -24,24 +24,25 @@
 			"detail": "디버거에서 생성된 작업입니다."
 		},
 		{
-			"type": "shell",
 			"label": "g++ build active file",
-			"command": "/usr/bin/g++",
+			"type": "shell",
+			"command": "g++", // g++ 경로 (시스템에 맞게 수정)
 			"args": [
-				"-fdiagnostics-color=always",
 				"-std=c++17",
-				"-g0",
+				"-fdiagnostics-color=always",
+				"-g",
 				"${file}",
 				"-o",
 				"${fileDirname}/build/${fileBasenameNoExtension}"
 			],
-			"options": {
-				"cwd": "${fileDirname}"
+			"group": {
+				"kind": "build",
+				"isDefault": true
 			},
 			"problemMatcher": [
 				"$gcc"
 			],
-			"group": "build"
+			"detail": "Generated task for building C++ files"
 		}
 	],
 	"version": "2.0.0"

@@ -5,17 +5,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(lldb) Launch",
-			"type": "cppdbg",
+			"type": "lldb",
 			"request": "launch",
 			"preLaunchTask": "g++ build active file",
+			"name": "Debug",
 			"program": "${fileDirname}/build/${fileBasenameNoExtension}",
 			"args": [],
-			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}",
-			"environment": [],
-			"externalConsole": false,
-			"MIMode": "lldb"
+			"cwd": "${fileDirname}/build"
 		}
 	]
 }
