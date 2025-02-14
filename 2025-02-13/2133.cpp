@@ -23,12 +23,12 @@ using namespace std;
 
 */
 
-unordered_map<int, int> cache_3;
+unordered_map<int, int> cache;
 
 int n;
 
 //* 2칸짜리 블록과 2n+2칸 짜리 블록이 존재함.
-int compute_3(int n) {
+int compute(int n) {
 	if (n % 2 == 1) {
 		return 0;
 	}
@@ -41,17 +41,17 @@ int compute_3(int n) {
 		return 1;
 	}
 
-	if (cache_3.count(n)) {
-		return cache_3[n];
+	if (cache.count(n)) {
+		return cache[n];
 	}
 
 	for (int i = 4;i <= n;i += 2) {
-		cache_3[n] += compute_3(n - i) * 2;
+		cache[n] += compute(n - i) * 2;
 	}
 
-	cache_3[n] += compute_3(n - 2) * 3;
+	cache[n] += compute(n - 2) * 3;
 
-	return cache_3[n];
+	return cache[n];
 }
 
 int main() {
@@ -60,6 +60,5 @@ int main() {
 
 	cin >> n; // n을 짝수라고 가정 함.
 
-	cout << compute_3(n);
-	// 위나 아래에 반드시 2*1 타일이 존재해야 함. 
+	cout << compute(n);
 }

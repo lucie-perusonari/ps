@@ -32,6 +32,5 @@ vector<int> insert_sort(vector<int> pointer) {
 int main() {
 	vector<int> v = { 5,4,1,2,6,8,9,7,0,3 };
 
-
 	vector<int> result = insert_sort(v);
 }
