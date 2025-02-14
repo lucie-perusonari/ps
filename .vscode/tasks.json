@@ -24,6 +24,17 @@
 			"detail": "디버거에서 생성된 작업입니다."
 		},
 		{
+			"label": "Create build folder",
+			"type": "shell",
+			"command": "mkdir -p ${fileDirname}/build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"detail": "Create the build directory if it doesn't exist."
+		},
+		{
 			"label": "g++ build active file",
 			"type": "shell",
 			"command": "g++", // g++ 경로 (시스템에 맞게 수정)
@@ -39,6 +50,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
+			"dependsOn": "Create build folder",
 			"problemMatcher": [
 				"$gcc"
 			],
