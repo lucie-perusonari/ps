@@ -55,11 +55,7 @@ using namespace std;
 string str;
 
 list<char> str_list(0);
-list<char>::iterator cursor;
-
-// 커서 규칙.
-// 
-
+list<char>::const_iterator cursor;
 
 void new_command_process(string command) {
 	if (command == "L") {
@@ -88,8 +84,7 @@ void new_command_process(string command) {
 		string c;
 		cin >> c;
 
-		cursor = str_list.insert(cursor, (char)c.front());
-		cursor++;
+		str_list.insert(cursor, (char)c.front());
 
 		return;
 	}
@@ -116,13 +111,6 @@ int main() {
 		cin >> s;
 
 		new_command_process(s);
-
-		string result = "";
-		for (const auto& c : str_list) {
-			result += c;
-		}
-
-		cout << result << " " << *cursor << endl;
 	}
 
 	string result = "";
