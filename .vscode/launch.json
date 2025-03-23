@@ -9,9 +9,9 @@
 			"request": "launch",
 			"preLaunchTask": "g++ build active file",
 			"name": "Debug",
-			"program": "${fileDirname}/build/${fileBasenameNoExtension}",
+			"program": "${fileDirname}\\build\\${fileBasenameNoExtension}",
 			"args": [],
-			"cwd": "${fileDirname}/build"
+			"cwd": "${fileDirname}\\build"
 		}
 	]
 }

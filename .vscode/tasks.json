@@ -9,7 +9,7 @@
 				"-g",
 				"${file}",
 				"-o",
-				"${fileDirname}\\build\\${fileBasenameNoExtension}"
+				"${fileDirname}\\build\\${fileBasenameNoExtension}.exe"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -26,7 +26,7 @@
 		{
 			"label": "Create build folder",
 			"type": "shell",
-			"command": "mkdir -p ${fileDirname}/build",
+			"command": "mkdir -p ${fileDirname}\\build",
 			"group": {
 				"kind": "build",
 				"isDefault": true
