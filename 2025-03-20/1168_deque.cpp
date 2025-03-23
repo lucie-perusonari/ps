@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <math.h>
 #include <list>
+#include <deque>
 
 using namespace std;
 
@@ -35,28 +36,40 @@ int main() {
 
 	// 참조 횟수가 1500만회 이하가 되어야 함.
 	// 연결 리스트로 구현해도 n*k가 나와버림. 탐색 n번, 인덱스 이동 k번
-	// 출력 자료를 만들어야 해서 시간 복잡도 n은 기본적으로 깔려 있음.
+	// => 이걸 최적화할 수는 없나? k>size가 되었을 때 k%size;를 해주면 빠르게 인덱스가 구해지지 않나? 
+	// ==> 이 경우 
 	// => 근데 지워진 숫자는 어떻게 알지? => n => n+k;를 했을 때, 그 사이에 얼마나 많은 수를 썼는지 알 수 있어야 함.
 
-	bool counting[n]; //* 0을 
+	// 왜 deque를 쓰니까 빨라지지?
+	deque<int> arr;
 	for (int i = 0;i < n;i++) {
-		counting[i] = false;
+		arr.push_back(i + 1);
 	}
 
-	int index = k - 1;
+	int current_index = 0;
+	auto ite = arr.begin();
 
 	string result = "<";
 
-	for (int i = 0;i < n;i++) {
-		while (true) {
-			if (counting[index]) {
-				index = (index + 1) % n;
-			} else {
-				counting[index] = true;
-				result += to_string(index + 1) + ", ";
-				index = (index + k) % n;
-				break;
-			}
+
+	//* 포인트는 current >= size(); 일 때, next를 어떻게 설정하면 좋을까? 
+	while (true) {
+		int size = arr.size();
+		int next_index = current_index + k - 1;
+
+		if (next_index < size) {
+			ite = next(ite, k - 1);
+			current_index = next_index;
+		} else {
+			current_index = next_index % size;
+			ite = next(arr.begin(), current_index);
+		}
+
+		result += to_string(*ite) + ", ";
+		ite = arr.erase(ite);
+
+		if (size - 1 == 0) {
+			break;
 		}
 	}
 
