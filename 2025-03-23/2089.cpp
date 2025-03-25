@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
+#include <cmath>
 
 using namespace std;
 
@@ -32,22 +33,41 @@ int main() {
 	int n;
 	cin >> n;
 
-
-	//* 정직하게 (-2)의 지수로 표현하는 방법임.
-	// 살펴보니까 0을 포함한 짝수는 양수, 홀수 자리는 음수로 표현하는 방식임.
-	// 홀수번 + 짝수가 음수 값, 짝수번 + 홀수가 양수 값임.
-	// 겹치는 표현 법이 있을 수 있나? 없음. 1을 더하면 양수와 음수가 전환 됨.
-	// => 그렇다면 표현하고픈 수가 음수인지, 양수인지만 알면 구할 수 있음.
-
-	n = abs(n);
+	string binary = "";
 
 
+	//* 1. -2진법은 수열에 -2를 나누면 앞의 항이 무엇인지 알 수 있다. n은 규칙을 가진 수열이다. 
+	//* 그렇다면 -2/를 나눈 후 나머지를 구한다. n의 각 항이 존재하는지 존재하지 않는 지 확인한다.
+	//* 나머지가 0인 경우는 신경 쓸 필요없다. /-2를 곱해도 0이다.
+	//* 하지만 나머지가 1인 경우 /-2를 하게 되면 그 값은 다음 연산 때 1/2 혹은 -1/2가 된다.
+	while (abs(n) > 0) {
+		int mod = n % -2;
 
-	if (n >= 0) {
+		if (mod == 0) {
+			n /= -2;
+			binary += "0";
+			continue;
+		}
 
-	} else {
-		exp(n);
+		if (n < 0) {
+			n /= -2;
+			n++;
+
+			binary += "1";
+			continue;
+		} else {
+			n /= -2;
+			binary += "1";
+			continue;
+		}
 	}
 
+	reverse(binary.begin(), binary.end());
+
+	if (binary.size() == 0) {
+		binary = "0";
+	}
+
+	cout << binary;
 
 }
