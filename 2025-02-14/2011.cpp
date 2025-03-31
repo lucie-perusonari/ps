@@ -36,15 +36,14 @@ using namespace std;
 
 */
 
-unordered_map<string, unordered_map<int, long>> cache;
+unordered_map<string, unordered_map<int, long long>> cache;
 
 // 길이가 너무 길어서 답이 없음. 하나하나씩 떼서 계산해야 함.
-// 문자열 처리 어케하는데
-
 // size_t가 음수가 되면 어떻게 되는 거지? => 언더플로우가 나잖아?
-long dp(string str, int length = 0) {
+long long dp(string str, int length = 0) {
 	if (cache.count(str) && cache[str].count(length)) {
-		return cache[str][length];
+		long long result = cache[str][length];
+		return result;
 	}
 
 	// 이 값이 0인 경우에는 딱코라는 뜻.
@@ -52,56 +51,61 @@ long dp(string str, int length = 0) {
 		return 0;
 	}
 
-	if (str.length() == 3) {
-
+	// 10, 20과 같은 애매한 길이의 숫자를 처리해주기 위해 사용.
+	if (length == 1 && str.length() == 2 && str[1] == '0') {
+		return 0;
 	}
 
 	// 길이가 0일 수도 있음.
-	int number = stoi(str.substr(str.length() - length));
+	int number = stoi(str.substr(0, length));
 
 	if (number > 26) {
 		return 0;
 	}
 
-	str = str.substr(0, str.length() - length);
+	// 원활한 캐싱을 위해 따로 선언함.
+	string new_str = str.substr(length, str.length() - length);
 
-	if (str.length() == 0) {
+	if (new_str.length() == 0) {
 		return 1;
 	}
 
-	cache[str][length] = (dp(str, 1) + dp(str, 2)) % 1000000;
+	cache[str][length] = (dp(new_str, 1) + dp(new_str, 2)) % 1000000;
 	return cache[str][length];
 }
 
+
+/*
+	1. 과도하게 큰 숫자를 받지 못하는가?
+	2. 0 처리에는 문제가 없는가? 0이 앞에 있는 경우, 0이 뒤에 있는 경우.
+	3. 26 초과 처리에는 문제가 없는가?
+	4. str 파싱에는 문제가 없는가?
+	5.
+*/
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
 	string str;
-	while (getline(cin, str));
-
-	// 해석 불가능한 케이스가 뭐가 있지? 0이 포함된 경우.
-	// 0을 찾고 그 왼쪽에 아무 것도 없거나 왼쪽이 3이상
+	cin >> str;
 
 	if (str[0] == '0') {
-		cout << 0;
+		cout << 0 << endl;
 		return 0;
 	}
 
+	// 0이면 왼쪽 값을 검사. 3 이상이거나 0 같은 해석불가 케이스를 제거함.
 	for (int i = 1;i < str.size();i++) {
 		if (str[i] == '0') {
 			int a = (int)(str[i - 1] - '0');
 			if (a > 2 || a == 0) {
-				cout << 0;
+				cout << 0 << endl;
 				return 0;
 			}
 		}
 	}
 
 	// 10 같은 경우에는 1이 나와야 함. 1010 같은 경우는 2가 나와야 함.
-	// 0이 있는지 없는지 검사하는 것이 중요할 듯. 1자리씩 떼어서 계산하는 경우 계산 불가능하면 dp자체의 값을 반영하면 안 됨.
-
-	// 아니면 아예 2~3자리 단위로 먼저 가져오는 방법을 생각해보자.
-	cout << (dp(str, 1) + dp(str, 2)) % 1000000;
-
+	// 0이 있는지 없는지 검사하는 것이 중요할 듯.
+	cout << (dp(str, 1) + dp(str, 2)) % 1000000 << endl;
 }
