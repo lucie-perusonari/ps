@@ -24,7 +24,7 @@ using namespace std;
 */
 
 // 이 로직으로 팩토리얼의 0의 개수를 구할 수 있음.
-int zero_count(int a, int b = 0) {
+int five_count(int a, int b = 0) {
 	int zero = 0;
 
 	while (a > 0) {
@@ -40,12 +40,29 @@ int zero_count(int a, int b = 0) {
 	return zero;
 }
 
+int two_count(int a) {
+	int zero = 0;
+
+	while (a > 0) {
+		zero += a / 2;
+		a /= 2;
+	}
+
+	return zero;
+}
+
+int zero_count(int a) {
+	int zero_count = min(five_count(a), two_count(a));
+
+	return zero_count;
+}
+
 unordered_map<int, int> test_case = { {1000, 249}, {10000, 2499}, {100000, 24999}, {1000000, 249998}, {20000000, 4999999}, {30000000, 7499998} };
 
 void test() {
 	for (const auto& entity : test_case) {
-		int oracle = zero_count(entity.first);
-		if (zero_count(entity.first) == entity.second) {
+		int oracle = five_count(entity.first);
+		if (five_count(entity.first) == entity.second) {
 			cout << entity.first << " : " << oracle << " : 성공!" << endl;
 		} else {
 			cout << entity.first << " : " << oracle << " : 실패!" << endl;
@@ -68,10 +85,9 @@ int main() {
 
 	int count = 0;
 
-	// 팩토리얼의 0 구하는 로직을 찾았음. 이를 이용하면 해볼만할 것 같음.
-	// 이제 가장 큰 문제는 아래의 연산이 일어나면 정확히 0에 어떤 영향이 미치는지를 알아야하는 것이다. 
-	// => 그러니깐 분모 분자가 어떻게 나오는지 확인해봐야함.
+
 	// n!/((n-m)!*m!)
+	// 팩토리얼의 0 구하는 로직을 찾았음. 이를 이용하면 해볼만할 것 같음.
 	int result = zero_count(n) - (zero_count(n - m) + zero_count(m));
 
 	cout << result;
