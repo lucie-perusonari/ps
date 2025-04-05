@@ -16,10 +16,6 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"dependsOn": "Create build folder",
-			"problemMatcher": [
-				"$gcc"
-			],
 			"detail": "Generated task for building C++ files"
 		}
 	],
