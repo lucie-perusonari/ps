@@ -1,40 +1,6 @@
 {
 	"tasks": [
 		{
-			"type": "cppbuild",
-			"label": "C/C++: g++.exe 활성 파일 빌드",
-			"command": "C:\\mingw64\\bin\\g++.exe",
-			"args": [
-				"-fdiagnostics-color=always",
-				"-g",
-				"${file}",
-				"-o",
-				"${fileDirname}\\build\\${fileBasenameNoExtension}.exe"
-			],
-			"options": {
-				"cwd": "${fileDirname}"
-			},
-			"problemMatcher": [
-				"$gcc"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"detail": "디버거에서 생성된 작업입니다."
-		},
-		{
-			"label": "Create build folder",
-			"type": "shell",
-			"command": "mkdir -p ${fileDirname}\\build",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"problemMatcher": [],
-			"detail": "Create the build directory if it doesn't exist."
-		},
-		{
 			"label": "g++ build active file",
 			"type": "shell",
 			"command": "g++", // g++ 경로 (시스템에 맞게 수정)
