@@ -70,6 +70,8 @@ int main() {
 	// 5. 마지막으로 언제나 조합은 자연수이므로 2와 5의 수를 세서 작은 쪽을 쓰면, 0의 자리가 몇 개인지 알 수 있다.
 
 
+
+
 	int two_result = two_count(n) - (two_count(n - m) + two_count(m));
 	int five_result = five_count(n) - (five_count(n - m) + five_count(m));
 
