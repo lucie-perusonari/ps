@@ -6,5 +6,6 @@
 		"algorithm": "cpp",
 		"new": "cpp",
 		"filesystem": "cpp"
-	}
+	},
+	"editor.insertSpaces": false
 }
