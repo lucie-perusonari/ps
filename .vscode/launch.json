@@ -1,17 +1,22 @@
 {
-	// IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
-	// 기존 특성에 대한 설명을 보려면 가리킵니다.
-	// 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"type": "lldb",
-			"request": "launch",
-			"preLaunchTask": "g++ build active file",
-			"name": "Debug",
-			"program": "${fileDirname}\\build\\${fileBasenameNoExtension}",
-			"args": [],
-			"cwd": "${fileDirname}\\build"
-		}
-	]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "preLaunchTask": "g++ build active file",
+      "name": "Debug",
+      "program": "${fileDirname}\\build\\${fileBasenameNoExtension}",
+      "args": [],
+      "cwd": "${fileDirname}\\build"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/perusonari/Documents/GitHub/ps/2024-01-17",
+      "program": "/Users/perusonari/Documents/GitHub/ps/2024-01-17/build/Release/outRelease"
+    }
+  ]
 }
