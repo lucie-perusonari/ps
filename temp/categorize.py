@@ -51,7 +51,6 @@ def transfer(problem_file_dir, level):
 	file_count+=1
 	tier_count[tier] +=1
 	tier_level_count[f"{tier}-{tier_level}"] +=1
-
 ## 서버에서 데이터를 가져와서 맵핑해주는 함수.
 def get_problem_level(user_id):
 	problem_level = {}
