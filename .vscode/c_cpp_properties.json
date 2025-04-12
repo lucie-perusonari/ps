@@ -13,6 +13,16 @@
             "intelliSenseMode": "windows-gcc-x64",
             "compilerPath": "C:/mingw64/bin/g++.exe",
             "cppStandard": "c++17"
+        },
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "intelliSenseMode": "macos-clang-arm64",
+            "compilerPath": "/usr/local/bin/g++",
+            "cppStandard": "c++17"
         }
     ],
     "version": 4
