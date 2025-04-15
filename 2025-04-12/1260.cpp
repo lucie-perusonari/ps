@@ -3,8 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
+#include <map>
 #include <deque>
-
 
 using namespace std;
 
@@ -21,80 +21,58 @@ using namespace std;
 
     *출력 :
           첫째 줄에 DFS를 수행한 결과를, 그 다음 줄에는 BFS를 수행한 결과를 출력한다. V부터 방문된 점을 순서대로 출력하면 된다.
-
 */
 
+map<int, vector<int> > graph;
+vector<bool> is_dfs_checked(1001, false);
 
+string result = "";
 
-
-struct Node {
-      int node_index;
-      vector<Node> edge(0);
-
-      Node(int index = 0) {
-            node_index = index;
-      }
-};
-
-vector<Node> graph = { Node() };
-vector<bool> dfs_check(1001, 0);
-vector<bool> bfs_check(1001, 0);
-
-vector<int> dfs_stack(0);
-deque<int> bfs_queue(0);
-
-bool is_dfs_checked(int index) {
-      if (dfs_check.at(index) == true) {
-            return true;
-      } else {
-            return false;
-      }
-}
-
-void dfs(int index) {
-
-
-      Node current_node = graph[index];
-      vector<Node> current_edge = current_node.edge;
-
-      int current_index = current_node.node_index;
-
-      dfs_check[current_index] = true;
-
-      // 초기 노드를 초기화 및 더 탐색할 수 없으므로 출력.
-      if (current_node.edge.empty() == true) {
-            cout << current_index << " ";
+void dfs(int a) {
+      if (is_dfs_checked[a] == true) {
             return;
       }
 
-      // 자기 자신이 아직까지 탐색이 필요하다는 것을 등록함.
-      dfs_stack.push_back(current_index);
+      result.append(to_string(a));
+      result.append(" ");
+      is_dfs_checked[a] = true;
 
-      Node next_node = current_node.edge.front();
-      int next_index = 0;
-
-      // 1. 그래프의 특성상 한 번만 노드에 들어가면, 노드는 완벽하게 탐색할 수 있을 것 같음. (동적 계획법과 비슷한 논리.)
-      // 2. 그런데 이걸 DFS라고 부를 수 있나? 만일 BFS를 구현해야한다고 치면 어떻게 접근해야하지?
-
-      // 현재 노드와 연결된 모든 간선을 탐색 함.
-      while (next_index < current_node.edge.size()) {
-            if (is_dfs_checked(next_index) == true) {
-                  continue;
-            }
-
-            // dfs는 
-            dfs(next_index);
-
-            next_index++;
+      if (graph.count(a) == false) {
+            return;
       }
 
-      // 마지막으로
-      dfs_check[current_index] = true;
-      dfs_stack.pop_back();
+      for (const auto& entry : graph[a]) {
+            dfs(entry);
+      }
+}
 
-      cout << current_index << " ";
+deque<int> bfs_queue = {};
+vector<bool> is_bfs_checked(1001, false);
 
-      return;
+void bfs(int a) {
+      bfs_queue.push_back(a);
+      is_bfs_checked[a] = true;
+
+      while (true) {
+            if (bfs_queue.empty() == true) {
+                  break;
+            }
+
+            int b = bfs_queue.front();
+            bfs_queue.pop_front();
+
+            // cout << b << " ";
+            result.append(to_string(b));
+            result.append(" ");
+
+            for (auto entry : graph[b]) {
+                  if (is_bfs_checked[entry] == true) {
+                        continue;
+                  }
+                  is_bfs_checked[entry] = true;
+                  bfs_queue.push_back(entry);
+            }
+      }
 }
 
 int main() {
@@ -105,37 +83,35 @@ int main() {
       int n, m, v;
       cin >> n >> m >> v;
 
-      for (int i = 0;i < m;i++) {
-            graph.push_back(Node(i + 1)); // 노드 번호 = 인덱스로 초기화 함.
-      }
 
-
-
+      // 간단하게 탐색만 구현해보자.
       while (m--) {
-            int start, end;
-            cin >> start >> end;
+            int a, b;
+            cin >> a >> b;
 
-            // start >= 1, end >= 1
-            bool is_duplicated = false;
-            for (const auto& next_node : graph[start].edge) {
-                  // 중복 노드가 존재하는 경우.
-                  if (next_node.node_index == end) {
-                        is_duplicated = true;
-                  }
+            if (graph.count(a) == false) {
+                  graph[a] = {};
             }
 
-            if (is_duplicated == true) {
-                  continue;
+            if (graph.count(b) == false) {
+                  graph[b] = {};
             }
 
-            graph[start].edge.push_back(Node(end));
+            // 양방향 연결.
+            // 중복이 생기는 것을 염두해야할 것 같음.
+            graph[a].push_back(b);
+            graph[b].push_back(a);
       }
 
-      for (const auto& node : graph) {
-            sort(node.edge.begin(), node.edge.end(), [](Node a, Node b) { return a.node_index < b.node_index; });
+      for (auto& entry : graph) {
+            sort(entry.second.begin(), entry.second.end());
       }
 
-      // 각각 DFS, BFS를 수행한 결과를 출력하면 됨. 공백으로 구분자로 사용.
       dfs(v);
+      result.pop_back();
+      result += "\n";
 
+      bfs(v);
+      result.pop_back();
+      cout << result;
 }
