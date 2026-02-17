@@ -32,39 +32,39 @@ using namespace std;
 		  출력해야하는 명령이 주어질 때마다, 한 줄에 하나씩 출력한다.
 
 */
-deque<int> queue;
+deque<int> q;
 
 void command_process(string command) {
 	if (command == "push") {
 		int a;
 		cin >> a;
-		queue.push_back(a);
+		q.push_back(a);
 		return;
 	}
 	if (command == "pop") {
-		if (queue.size()) {
-			cout << *queue.begin();
-			queue.pop_front();
+		if (q.size()) {
+			cout << *q.begin();
+			q.pop_front();
 		} else {
 			cout << -1;
 		}
 	}
 	if (command == "size") {
-		cout << queue.size();
+		cout << q.size();
 	}
 	if (command == "empty") {
-		cout << queue.empty();
+		cout << q.empty();
 	}
 	if (command == "front") {
-		if (queue.size()) {
-			cout << *queue.begin();
+		if (q.size()) {
+			cout << *q.begin();
 		} else {
 			cout << -1;
 		}
 	}
 	if (command == "back") {
-		if (queue.size()) {
-			cout << *(queue.end() - 1);
+		if (q.size()) {
+			cout << *(q.end() - 1);
 		} else {
 			cout << -1;
 		}

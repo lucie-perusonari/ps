@@ -31,35 +31,35 @@ using namespace std;
 
 */
 
-vector<int> stack;
+vector<int> stck;
 
 void command_process(string command) {
 	if (command == "push") {
 		int a;
 		cin >> a;
-		stack.push_back(a);
+		stck.push_back(a);
 		return;
 	}
 	if (command == "pop") {
-		if (stack.size()) {
-			cout << *(stack.end() - 1);
-			stack.pop_back();
+		if (stck.size()) {
+			cout << *(stck.end() - 1);
+			stck.pop_back();
 		} else {
 			cout << -1;
 		}
 	}
 	if (command == "size") {
-		cout << stack.size();
+		cout << stck.size();
 	}
 	if (command == "top") {
-		if (stack.size()) {
-			cout << *(stack.end() - 1);
+		if (stck.size()) {
+			cout << *(stck.end() - 1);
 		} else {
 			cout << -1;
 		}
 	}
 	if (command == "empty") {
-		cout << stack.empty();
+		cout << stck.empty();
 	}
 
 	cout << "\n";
